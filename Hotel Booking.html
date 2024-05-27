@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html lang="en-in">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hotel | Booking</title>
+<link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+<style type="text/css">
+section{
+    background-image:url(public/images/hotel.jpg);
+    background-repeat:no-repeat;
+    background-size:cover;
+    width:100%;
+    height:600px;
+}
+.shade{
+    background-color:rgba(72, 47, 47, 0.6);
+    width:100%;
+    height:600px;
+}
+.nav-link{
+    color:rgb(242, 93, 38);
+}
+.nav-link:hover{
+    color:whitesmoke;
+}
+#days,#persons{
+    width:100px;
+}
+</style>
+<script type="text/javascript">
+ function bookRoom(){
+    var total=0;
+    var balance=0;
+    var roomCost=0;
+    var extraCost=0;
+    var advance=parseInt(document.getElementById("advance").value);
+    var amenityCost=0;
+    var Amenities="";
+    var days=document.getElementById("days").value;
+    var persons=document.getElementById("persons").value;
+    var extraPerson=persons-2;
+    var deluxe=document.getElementById("optDelux");
+    var suite=document.getElementById("optSuite");
+    var ac=document.getElementById("optAc");
+    var locker=document.getElementById("optLocker");
+    if(deluxe.checked){
+        roomCost+=2500;
+        document.getElementById("lblRoom").innerHTML=deluxe.value;
+    }
+    if(suite.checked){
+        roomCost+=4000;
+        document.getElementById("lblRoom").innerHTML=suite.value;
+    }
+    if(ac.checked){
+        amenityCost+=1000;
+        Amenities+=ac.value+"<br>";
+    }
+    if(locker.checked){
+        amenityCost+=300;
+        Amenities+=locker.value+"<br>";
+    }
+    if(extraPerson>=1){
+        extraCost=extraPerson*1000;
+    }
+    document.getElementById("lblAmenity").innerHTML=Amenities;
+    document.getElementById("lblAdvance").innerHTML=advance;
+    document.getElementById("lblName").innerHTML=document.getElementById("name").value;
+    document.getElementById("lblDate").innerHTML=document.getElementById("inDate").value;
+    document.getElementById("lblDays").innerHTML=days;
+    document.getElementById("lblPersons").innerHTML=persons;
+    var total=(roomCost+amenityCost+extraCost)*days;
+    var balance=total-advance;
+    document.getElementById("lblBalance").innerHTML=balance.toLocaleString("en-in",{style:"currency",currency:"INR"});
+
+ }
+</script>
+</head>
+<body class="container-fluid mt-2">
+    <script src="../node_modules/jquery/dist/jquery.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <section>
+        <div class="shade">
+            <h2 class="text-center text-light pt-4">Make <img src= "../public/images/trip.jpg" width="40" height="35"> Trip</h2>
+            <main class="text-white p-4">
+                <ul class="list-unstyled nav nav-tabs">
+                    <li class="nav-item"><a class="nav-link active" href="#customer" data-bs-toggle="tab">Customer Info</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#room" data-bs-toggle="tab">Select Room Type</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#amenity" data-bs-toggle="tab">Select Amenities</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#register" data-bs-toggle="tab">Advance Amount</a></li>
+                </ul>
+                <div class="tab-content mt-3 bg-white text-dark p-4">
+                    <div class="tab-pane active" id="customer">
+                        <dl>
+                            <dt class="form-label">Customer Name</dt>
+                            <dd><input type="text" class="border rounded rounded-1" id="name"></dd>
+                            <dt class="form-label">Check in Date</dt>
+                            <dd><input type="date" min="2023-12-24" value="2023-12-24" max="2024-01-30" class="border rounded rounded-1" id="inDate"></dd>
+                            <dt class="form-label">Total no of Days</dt>
+                            <dd ><input type="number" class="border rounded rounded-1" id="days" min="1"><label class="ms-2 text-secondary">Days</label></dd>
+                            <dt class="form-label">Total no of Persons</dt>
+                            <dd ><input type="number" class="border rounded rounded-1" id="persons" min="1"><label class="ms-2 text-secondary">Persons</label></dd>
+                        </dl>
+                    </div>
+                    <div class="tab-pane" id="room">
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="mt-2 mb-4"><img src="../public/images/Delux.jpg" height="300" width="500"></div>
+                                <input type="radio" class="form-check-input" name="room" value="Delux Room" id="optDelux"><label class="form-check-label ms-2 fw-bold">Delux Room</label>
+                            </div>
+                            <div class="col text-center">
+                                <div class="mt-2 mb-4 ">
+                                    <img src="../public/images/Suite.jpg" height="300" width="500">
+                                </div>
+                                <input type="radio" class="form-check-input" name="room" value="Suite Room" id="optSuite"><label class="form-check-label ms-2 fw-bold">Suite Room</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane" id="amenity">
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="mt-2 mb-4">
+                                    <img src="../public/images/ac.jpg" height="300" width="500">
+                                </div>
+                                <input type="checkbox" id="optAc" class="form-check-input" value="A/C"><label class="form-check-label ms-2 fw-bold">A/C</label>
+                            </div>
+                            <div class="col text-center">
+                                <div class="mt-2 mb-4">
+                                    <img src="../public/images/locker.jpg" height="300" width="500">
+                                </div>
+                                <input type="checkbox" id="optLocker" class="form-check-input" value="Locker"><label class="form-check-label ms-2 fw-bold">Locker</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane text-center" id="register">
+                        <div class="mt-2 mb-4">
+                            <label class="fw-bold me-2">Advance Amount</label>
+                            <input type="text" size="14" placeholder="Minimum &#8377 1000" class="border rounded rounded-1" id="advance">
+                        </div>
+                        <button class="btn btn-danger" onclick="bookRoom()" data-bs-target="#summary" data-bs-toggle="modal">Book Room</button>
+                    </div>
+                </div>
+            </main>
+            <!----------------------- Booking Details Modal -------------------------------->
+            <div class="modal fade" id="summary">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="text-danger">Booking Summary</h3>
+                            <button class="btn btn-close" data-bs-toggle="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <dl>
+                                <dt>
+                                    Customer Name
+                                </dt>
+                                <dd id="lblName"></dd>
+                                <dt>Check in Date</dt>
+                                <dd id="lblDate"></dd>
+                                <dt>Total No Of Days</dt>
+                                <dd id="lblDays"></dd>
+                                <dt>Total No of Persons</dt>
+                                <dd id="lblPersons"></dd>
+                                <dt>Room Type</dt>
+                                <dd id="lblRoom"></dd>
+                                <dt>Amenities</dt>
+                                <dd id="lblAmenity"></dd>
+                                <dt>Advance Amount</dt>
+                                <dd id="lblAdvance"></dd>
+                                <dt>Balance To Be Paid</dt>
+                                <dd id="lblBalance" class="fw-bold"></dd>
+                            </dl>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger w-25" style="margin-right:180px;" data-bs-target="#summary" data-bs-toggle="modal">Pay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
